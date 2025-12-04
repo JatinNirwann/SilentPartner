@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+python-multipart
+langchain
+langchain-community
+faiss-cpu
+sentence-transformers
+pytesseract
+pdf2image
+sqlite-utils
+pydantic
+easyocr

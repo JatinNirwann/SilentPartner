@@ -1,0 +1,5 @@
+{
+  "name": "SilentPartner",
+  "description": "A local-first document intelligence platform using on-device LLMs for privacy-focused research and data extraction.",
+  "requestFramePermissions": []
+}

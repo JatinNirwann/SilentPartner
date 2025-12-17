@@ -1,0 +1,14 @@
+flask
+flask-cors
+faiss-cpu
+sentence-transformers
+pytesseract
+pdf2image
+sqlite-utils
+easyocr
+python-dateutil
+requests
+google-generativeai
+torch
+numpy
+Pillow

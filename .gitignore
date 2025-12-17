@@ -1,0 +1,17 @@
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.db
+*.sqlite3
+backend/data/*.db
+data/documents/
+data/vector_store/
+data/chats.json
+deps/
+backend/deps/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log

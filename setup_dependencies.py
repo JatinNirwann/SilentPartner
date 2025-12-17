@@ -7,7 +7,6 @@ import shutil
 from pathlib import Path
 import ctypes
 
-# Configuration
 POPPLER_URL = "https://github.com/oschwartz10612/poppler-windows/releases/download/v24.02.0-0/Release-24.02.0-0.zip"
 TESSERACT_URL = "https://github.com/UB-Mannheim/tesseract/releases/download/v5.4.0.20240606/tesseract-ocr-w64-setup-5.4.0.20240606.exe"
 
@@ -62,10 +61,8 @@ def install_poppler():
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall(DEPS_DIR)
         
-        # Rename extracted folder
         extracted_dirs = [d for d in DEPS_DIR.iterdir() if d.is_dir() and "Release" in d.name]
         if extracted_dirs:
-            # If target dir exists (partial install), remove it
             if poppler_dir.exists():
                 shutil.rmtree(poppler_dir)
             os.rename(extracted_dirs[0], poppler_dir)
@@ -82,7 +79,6 @@ def install_poppler():
 def install_tesseract():
     print("\n--- Checking Tesseract OCR ---")
     
-    # Check common paths
     common_paths = [
         r"C:\Program Files\Tesseract-OCR\tesseract.exe",
         r"C:\Program Files (x86)\Tesseract-OCR\tesseract.exe",
@@ -110,16 +106,10 @@ def install_tesseract():
         print("Running installer... (Please accept the installation prompt)")
         print("Installing silently to default location...")
         
-        # Run silent install
-        # /S = Silent
-        # /v = Pass arguments to MSI (if wrapped) - standard NSIS uses /S
         cmd = [str(installer_path), "/S"]
         
         if not is_admin():
             print("Requesting admin privileges for installation...")
-            # Re-run this script segment or just run the installer with ShellExecute
-            # For simplicity, just run the installer and hope user accepts UAC
-            # ShellExecute is better for UAC prompt
             ctypes.windll.shell32.ShellExecuteW(None, "runas", str(installer_path), "/S", None, 1)
         else:
             run_command(cmd, shell=False)

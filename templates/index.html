@@ -6,20 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SilentPartner // Intelligence</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
 
-    <!-- Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
 
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <!-- Marked for Markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script>
@@ -271,7 +267,6 @@
             </h1>
         </div>
 
-        <!-- Navigation -->
         <nav class="flex-1 px-4 py-6 space-y-2">
             <button onclick="switchTab('tasks')" id="nav-tasks"
                 class="nav-item w-full flex items-center gap-4 px-3 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all group">
@@ -290,7 +285,6 @@
             </button>
         </nav>
 
-        <!-- Status -->
         <div class="p-4 border-t border-white/5 hidden md:block">
             <div class="flex items-center gap-2 mb-2">
                 <span class="relative flex h-2 w-2">
@@ -308,7 +302,6 @@
     <main
         class="flex-1 flex flex-col relative overflow-hidden bg-gradient-to-br from-background-dark to-[#0f1219] min-h-0">
 
-        <!-- HEADER -->
         <header class="h-16 flex items-center justify-between px-6 border-b border-white/5 glass-panel shrink-0 z-10">
             <div class="flex items-center gap-3">
                 <h2 class="text-sm md:text-base font-bold tracking-wider text-white" id="header-title">
@@ -323,15 +316,12 @@
             </div>
         </header>
 
-        <!-- VIEW: CHAT -->
         <div id="view-chat" class="view-section flex-1 flex flex-col h-full overflow-hidden relative">
-            <!-- Messages -->
             <div id="chat-container" class="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 scroll-smooth pb-32">
                 <div class="flex justify-center">
                     <span
                         class="text-[10px] font-bold text-slate-600 uppercase tracking-widest bg-surface-dark px-3 py-1 rounded-full border border-white/5">Today</span>
                 </div>
-                <!-- Initial Message -->
                 <div class="flex items-start gap-4 max-w-3xl mx-auto w-full">
 
                     <div class="flex flex-col gap-2 flex-1">
@@ -346,11 +336,9 @@
                 </div>
             </div>
 
-            <!-- Input -->
             <div
                 class="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-t from-background-dark via-background-dark to-transparent z-20">
                 <div class="max-w-3xl mx-auto">
-                    <!-- Suggestions -->
                     <div class="flex gap-2 mb-3 overflow-x-auto pb-1 no-scrollbar">
                         <button onclick="sendSuggestion(this)"
                             class="whitespace-nowrap px-3 py-1.5 rounded-full bg-surface-lighter border border-white/5 text-xs text-slate-400 hover:text-white hover:bg-white/10 hover:border-primary/30 transition-all">Summarize
@@ -384,7 +372,6 @@
         <!-- VIEW: INGEST -->
         <div id="view-ingest" class="view-section hidden h-full p-8 overflow-y-auto">
             <div class="max-w-7xl mx-auto w-full h-full flex flex-col gap-8">
-                <!-- Dropzone -->
                 <div class="w-full shrink-0 h-64 flex flex-col justify-center items-center border-2 border-dashed border-white/10 rounded-2xl bg-surface-lighter/20 hover:bg-surface-lighter/40 hover:border-primary/50 transition-all group cursor-pointer relative overflow-hidden"
                     onclick="triggerUpload()">
                     <input type="file" id="file-input" hidden onchange="handleFileUpload(event)">
@@ -421,7 +408,6 @@
                             onclick="loadDocuments()">Refresh</span>
                     </div>
                     <div id="file-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pr-2 pb-20">
-                        <!-- Dynamic File List -->
                         <p class="text-xs text-slate-500 italic p-3 col-span-full text-center">Loading documents...</p>
                     </div>
                 </div>
@@ -431,7 +417,6 @@
         <!-- VIEW: TASKS -->
         <div id="view-tasks" class="view-section hidden h-full p-8 overflow-y-auto">
             <div class="max-w-6xl mx-auto w-full">
-                <!-- Header -->
                 <div class="flex items-end justify-between mb-8 border-b border-white/10 pb-4">
                     <div>
                         <div class="flex items-center gap-2 mb-1">
@@ -448,7 +433,6 @@
                         <p class="text-slate-400 mt-2 max-w-2xl">Manage document retrieval queues and intelligent agent
                             reminders.</p>
                     </div>
-                    <!-- Clock could go here -->
                 </div>
 
                 <div class="p-8 bg-surface-lighter rounded-xl border border-white/5 text-center">
@@ -461,7 +445,6 @@
 
     </main>
 
-    <!-- Modal for Extracted Text -->
     <div id="text-modal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -481,10 +464,10 @@
     </div>
 
     <script>
-        // State
         const views = ['chat', 'ingest', 'tasks'];
         let isFirstMessage = true;
 
+        // Navigation Logic
         // Navigation Logic
         function switchTab(viewId) {
             views.forEach(v => {
@@ -509,7 +492,6 @@
             }
         }
 
-        // Chat Logic
         const chatContainer = document.getElementById('chat-container');
         const chatInput = document.getElementById('chat-input');
 
@@ -540,7 +522,6 @@
             chatInput.value = '';
             scrollToBottom();
 
-            // API Call
             const loadingId = appendLoading();
 
             try {
@@ -613,6 +594,7 @@
             chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
         }
 
+        // Ingest Logic
         // Ingest Logic
         function triggerUpload() {
             document.getElementById('file-input').click();
@@ -711,11 +693,11 @@
             });
         }
 
-        // Close dropdowns when clicking outside
         document.addEventListener('click', () => {
             closeAllDropdowns();
         });
 
+        // Document Actions
         // Document Actions
         function openDocument(docId, event) {
             event.stopPropagation();
@@ -764,11 +746,9 @@
             }
         });
 
-        // Initial Load
         loadDocuments();
     </script>
 
-    <!-- Global Dropdown Menu -->
     <div id="global-dropdown" class="dropdown-menu">
         <button id="global-open-btn" onclick="">
             <span class="material-symbols-outlined text-[16px] align-middle mr-2">open_in_new</span>Open Document
@@ -783,8 +763,6 @@
     </div>
 
     <script>
-        // ... (existing scripts) ... 
-
         let activeDocId = null;
 
         function showGlobalDropdown(event, docId, filename) {
@@ -819,8 +797,6 @@
                 closeAllDropdowns();
             }
         });
-
-        // ...
     </script>
 </body>
 

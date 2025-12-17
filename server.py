@@ -9,10 +9,8 @@ from database import init_db, save_document, save_chunks, get_db, save_chat, get
 app = Flask(__name__, static_folder="static", template_folder="templates")
 CORS(app)
 
-# Lock for DB writes
 db_lock = threading.Lock()
 
-# Initialize DB on startup
 with app.app_context():
     init_db()
 
@@ -34,7 +32,6 @@ def upload_document():
         file_path = os.path.join("data/documents", filename)
         file.save(file_path)
         
-        # Process Document
         result = process_document(file_path)
         extracted_text = result["text"]
         metadata = result["metadata"]
@@ -43,7 +40,6 @@ def upload_document():
         with db_lock:
             doc_id = save_document(filename, file_path, file_size, extracted_text, metadata)
             
-            # RAG Processing
             from rag_engine import generate_embeddings, add_to_index, index
             chunks, embeddings = generate_embeddings(extracted_text)
             
@@ -100,7 +96,6 @@ def delete_doc(doc_id):
     with db_lock:
         db = get_db()
         db["documents"].delete(doc_id)
-        # Also delete chunks - safe way if table doesn't exist
         try:
             db["chunks"].delete_where("document_id = ?", [doc_id])
         except Exception:
@@ -109,7 +104,6 @@ def delete_doc(doc_id):
 
 @app.route("/documents/<int:doc_id>/file", methods=["GET"])
 def get_document_file(doc_id):
-    """Serve the original uploaded document file."""
     doc = get_document_by_id(doc_id)
     if not doc:
         return jsonify({"error": "Document not found"}), 404
@@ -122,7 +116,6 @@ def get_document_file(doc_id):
 
 @app.route("/documents/<int:doc_id>/text", methods=["GET"])
 def get_document_text(doc_id):
-    """Return the extracted text for a document."""
     doc = get_document_by_id(doc_id)
     if not doc:
         return jsonify({"error": "Document not found"}), 404
